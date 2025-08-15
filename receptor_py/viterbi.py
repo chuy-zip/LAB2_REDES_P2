@@ -2,9 +2,9 @@
 # de la cadena de entrada y además el algoritmo creo que debería mostrar el output cuando corrige el error
 # a y creo que este si es capaz de corregir mas de 2
 
-# para que sea compatible con el sistema, se debe de regresar la cadena binaria decodificada y también
-# si hay un erro se regrsa una cadena con el formato error|<descripcion de error>
-# en checksum y amming ya esta
+# Para que sea compatible con el sistema, se debe de regresar la cadena binaria decodificada
+# también si hay un error se regresa una cadena con el formato error|<descripcion de error>
+# en checksum y hamming ya esta por si te sirve de referencia
 
 def viterbi(received: str):
     states = ['00', '01', '10', '11']
