@@ -1,11 +1,3 @@
-# buenas, hay que hacerle unos pocos ajustes, los states creo que tienen que ser dinamicos, porque supongo dependen del largo
-# de la cadena de entrada y además el algoritmo creo que debería mostrar el output cuando corrige el error
-# a y creo que este si es capaz de corregir mas de 2
-
-# Para que sea compatible con el sistema, se debe de regresar la cadena binaria decodificada
-# también si hay un error se regresa una cadena con el formato error|<descripcion de error>
-# en checksum y hamming ya esta por si te sirve de referencia
-
 def viterbi(received: str):
     states = ['00', '01', '10', '11']
 
@@ -46,9 +38,9 @@ def viterbi(received: str):
     print("\n--- Resultado Viterbi ---")
     #print("Mensaje decodificado:", decoded)
     if errors == 0:
-        print("No se detectaron errores.")
+        return f"{decoded}"
     elif errors == 1:
-        print("Se detectó y corrigió 1 error.")
+        return "error|Se detectó 1 error."
     else:
-        print(f"Se detectaron múltiples errores: {errors}. El mensaje puede no ser confiable.")
+        return f"error|Se detectaron {errors}. El mensaje puede no ser confiable."
 
