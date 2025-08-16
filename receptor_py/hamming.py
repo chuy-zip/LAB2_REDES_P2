@@ -38,7 +38,7 @@ def hamming(binary_string):
             bits[syndrome - 1] = '1' if bits[syndrome - 1] == '0' else '0'
         else:
             #print("Error no corregible ")
-            return "error|hamming no pudo corregir el error" 
+            return "error|hamming: multiples errores detectados (no corregibles)" 
     
     # Extraer bits de datos
     data_bits = []
