@@ -4,6 +4,7 @@ import threading
 from checksum import checksum
 from hamming import hamming
 from viterbi import viterbi
+from time import time
 
 # Capa 5: Transmisión
 def recibir_informacion():
@@ -46,13 +47,17 @@ def decodificar_mensaje(binario):
 
 # Capa 1: Aplicación
 def mostrar_mensaje(resultado):
-    if resultado.startswith("error|"):
-        print(f"\n[!] Error: {resultado.split('|')[1]}")
-    else:
-        algoritmo = resultado.split('|')[0]
-        final = resultado.split('|')[1]
-        
-        print(f"\nMensaje procesado con {algoritmo}, se ha recibido: {final}")
+    try:
+        if resultado.startswith("error|"):
+            print(f"\n[!] Error: {resultado.split('|')[1]}")
+        else:
+            algoritmo = resultado.split('|')[0]
+            final = resultado.split('|')[1]
+            
+            print(f"\nMensaje procesado con {algoritmo}, se ha recibido: {final}")
+            
+    except Exception as e:
+        print(f"\n[!] Error al mostrar el mensaje: {e}")
 
 # Main
 if __name__ == "__main__":
