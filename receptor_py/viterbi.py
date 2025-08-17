@@ -35,10 +35,10 @@ def viterbi(received: str):
     best_state = min(paths, key=lambda s: paths[s][1])
     decoded, errors = paths[best_state]
 
-    print("\n--- Resultado Viterbi ---")
-    #print("Mensaje decodificado:", decoded)
+    # print("\n--- Resultado Viterbi ---")
+    print("Mensaje decodificado:", decoded)
     if errors == 0:
-        return f"{decoded}"
+        return decoded
     elif errors == 1:
         return "error|Se detectó 1 error."
     else:
