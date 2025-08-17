@@ -5,6 +5,8 @@
 #include <vector>
 
 std::string viterbi(std::string input) {
+    std::cout << "Convulacional recibió: " << input << std::endl;
+
     std::string output;
     int shift_register[3] = {0, 0, 0}; // bit0: actual, bit1: anterior, bit2: anterior del anterior
 
