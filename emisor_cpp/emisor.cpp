@@ -71,46 +71,64 @@ void enviar_informacion(const string& trama) {
 }
 
 void hacer_pruebas(int num_pruebas, double error_prob, string algoritmo) {
-    srand(time(0));
+    srand(time(0)); // Semilla
     
-    int longitud[3] = {8, 16, 32};
-    
+    int longitud[3] = {8, 16, 32}; // Longitud de las cadenas
+
     for (int i = 0; i < num_pruebas; i++) {
         string binario_random = "";
 
-        for (int i = longitud[rand() % 3]; i > 0; i--) {
-            binario_random += to_string(rand() % 2);
+        for (int i = longitud[rand() % 3]; i > 0; i--) { // Se elige una longitud random del arreglo de arriba
+            binario_random += to_string(rand() % 2); // Se genera una cadena binaria random de longitud elegida
         }
 
         string binario = codificar_mensaje(algoritmo + "|" + binario_random);
         string trama = calcular_integridad(binario, algoritmo);
-        string trama_ruidosa = aplicar_ruido(trama, 0.0);
-        enviar_informacion(algoritmo + '|' + trama_ruidosa);
-        cout << "Prueba " << i + 1 << ": Enviando binario: '" << binario_random
-             << "' con algoritmo '" << algoritmo << "' y probabilidad de error "
-             << error_prob << endl;
-        sleep(1);
+        string trama_ruidosa = aplicar_ruido(trama, error_prob);
+        enviar_informacion(algoritmo + '|' + trama_ruidosa + '|' + to_string(error_prob));
+        cout << "Prueba: " << i + 1 << " Enviando binario: '" << binario_random << "' con algoritmo '" << algoritmo << "' y probabilidad de error " << error_prob << "\n" << endl;
+        sleep(1); // Esperar 1 segundo
     }
+
 }
 
 
 int main() {
-        // Flujo del Emisor
-    // string datos = solicitar_mensaje();         // Capa 1
-    // string binario = codificar_mensaje(datos);  // Capa 2
-    // string algoritmo = datos.substr(0, datos.find('|'));
-    // string trama = calcular_integridad(binario, algoritmo); // Capa 3
-    // // La funcion de ruido recibe como segundo parametro opcional la probabilidad de fallo
-    // // osea la probabilidad de que cualquiera de los bits se cambie
-    // // con 0 pues, no cambia nada xd
-    // string trama_ruidosa = aplicar_ruido(trama, 0.0);           // Capa 4
-    // enviar_informacion(algoritmo + '|' + trama_ruidosa);              // Capa 5
-
-    string algoritmos[3] = {"hamming", "viterbi", "checksum"};
-    for (const string& alg : algoritmos) {
-        hacer_pruebas(10, 0.0, alg);
-    }
-
-    return 0;
+    while (true)
+    {
+        string opcion;
+        cout << "Ingresa 1 para enviar un mensaje, 2 para realizar pruebas y 3 para salir." << "\n" << endl;
+        getline(cin, opcion);
+        
+        if (opcion == "1") {
+            // Flujo del Emisor
+            string datos = solicitar_mensaje();         // Capa 1
+            string binario = codificar_mensaje(datos);  // Capa 2
+            string algoritmo = datos.substr(0, datos.find('|'));
+            string trama = calcular_integridad(binario, algoritmo); // Capa 3
+            // La funcion de ruido recibe como segundo parametro opcional la probabilidad de fallo
+            // osea la probabilidad de que cualquiera de los bits se cambie
+            // con 0 pues, no cambia nada xd
+            string trama_ruidosa = aplicar_ruido(trama, 0.0);           // Capa 4
+            enviar_informacion(algoritmo + '|' + trama_ruidosa);              // Capa 5
+        
+        } else if (opcion == "2") {
+            string algoritmos[3] = {"hamming", "viterbi", "checksum"};
+            
+            for (const string& alg : algoritmos) {
+                hacer_pruebas(10000, 0.01, alg);
+            }
+            
+            enviar_informacion("EOT");
     
+        } else if (opcion == "3") {
+            cout << "Saliendo del emisor." << endl;
+            break; 
+        
+        } else {
+            cout << "Opción no válida." << endl;
+        }
+    }
+    
+    return 0;
 }
